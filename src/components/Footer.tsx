@@ -11,7 +11,7 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
             <img 
               src={logo} 
               alt="Evolve Connection Coaching" 
-              className="h-12 w-auto rounded-lg"
+              className="h-12 w-auto rounded-lg mix-blend-multiply"
             />
           </div>
 

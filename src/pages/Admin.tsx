@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { LogOut, Save, Plus, Trash2 } from "lucide-react";
+import { LogOut, Save, Plus, Trash2, Upload } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 
 type ContentData = {
@@ -19,6 +19,8 @@ const Admin = () => {
   const [content, setContent] = useState<ContentData>({});
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -150,6 +152,34 @@ const Admin = () => {
     });
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, section: string, field: string) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${section}-${field}-${Date.now()}.${fileExt}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from('site-images')
+        .upload(fileName, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('site-images')
+        .getPublicUrl(fileName);
+
+      updateField(section, field, publicUrl);
+      toast.success("Image uploaded successfully!");
+    } catch (error: any) {
+      toast.error("Failed to upload image: " + error.message);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -252,6 +282,35 @@ const Admin = () => {
                 </Button>
               </CardHeader>
               <CardContent className="space-y-4">
+                <div>
+                  <Label>Profile Image</Label>
+                  <div className="mt-2 flex items-center gap-4">
+                    {content.about?.imageUrl && (
+                      <img 
+                        src={content.about.imageUrl} 
+                        alt="Danielle" 
+                        className="w-24 h-24 object-cover rounded-lg"
+                      />
+                    )}
+                    <div>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageUpload(e, "about", "imageUrl")}
+                        className="hidden"
+                        id="about-image-upload"
+                      />
+                      <Button
+                        variant="outline"
+                        onClick={() => document.getElementById('about-image-upload')?.click()}
+                        disabled={isUploading}
+                      >
+                        <Upload className="w-4 h-4 mr-2" />
+                        {isUploading ? "Uploading..." : "Upload New Image"}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
                 <div>
                   <Label>Title</Label>
                   <Input

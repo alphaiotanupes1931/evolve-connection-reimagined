@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useContent } from "@/contexts/ContentContext";
 
-const workshops = [
+const defaultWorkshops = [
   {
     date: "April 15, 2025",
     time: "9:00 AM - 4:00 PM",
@@ -33,6 +34,13 @@ const workshops = [
 ];
 
 const Workshops = () => {
+  const { content } = useContent();
+  const workshopsContent = content.workshops || {};
+  
+  const title = workshopsContent.title || "Upcoming Workshops";
+  const subtitle = workshopsContent.subtitle || "Join transformative group experiences focused on healing, growth, and connection.";
+  const workshops = workshopsContent.items || defaultWorkshops;
+
   return (
     <section className="py-24 lg:py-36 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
@@ -44,15 +52,15 @@ const Workshops = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-6">
-            Upcoming Workshops
+            {title}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Join transformative group experiences focused on healing, growth, and connection.
+            {subtitle}
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          {workshops.map((workshop, index) => (
+          {workshops.map((workshop: any, index: number) => (
             <motion.div
               key={workshop.title}
               initial={{ opacity: 0, y: 30 }}
@@ -76,7 +84,7 @@ const Workshops = () => {
               <div className="mb-6">
                 <p className="font-medium text-foreground mb-3 text-sm uppercase tracking-wide">What you'll learn:</p>
                 <ul className="space-y-2">
-                  {workshop.highlights.map((item) => (
+                  {workshop.highlights?.map((item: string) => (
                     <li key={item} className="text-sm text-muted-foreground flex items-start gap-3">
                       <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                       {item}
@@ -86,7 +94,7 @@ const Workshops = () => {
               </div>
 
               <div className="text-sm text-muted-foreground mb-6">
-                📍 {workshop.location}
+                {workshop.location}
               </div>
 
               <Button 

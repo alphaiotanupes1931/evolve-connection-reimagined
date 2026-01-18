@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
+import { useContent } from "@/contexts/ContentContext";
 
-const testimonials = [
+const defaultTestimonials = [
   {
     quote: "Working with Danielle completely transformed how my partner and I communicate. We've developed tools to navigate conflict in a way that brings us closer rather than pushing us apart. Her restorative approach helped us break old patterns and build a stronger foundation.",
   },
@@ -13,6 +14,13 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  const { content } = useContent();
+  const testimonialsContent = content.testimonials || {};
+  
+  const title = testimonialsContent.title || "What Clients Say";
+  const subtitle = testimonialsContent.subtitle || "Hear from individuals and couples who have experienced transformation through our coaching services.";
+  const testimonials = testimonialsContent.items || defaultTestimonials;
+
   return (
     <section id="testimonials" className="py-24 lg:py-36 bg-card">
       <div className="container mx-auto px-4 lg:px-8">
@@ -24,15 +32,15 @@ const Testimonials = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-6">
-            What Clients Say
+            {title}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Hear from individuals and couples who have experienced transformation through our coaching services.
+            {subtitle}
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.map((testimonial: any, index: number) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}

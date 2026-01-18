@@ -8,21 +8,24 @@ import FAQ from "@/components/FAQ";
 import Booking from "@/components/Booking";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import { ContentProvider } from "@/contexts/ContentContext";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      <Header />
-      <Hero />
-      <About />
-      <Services />
-      <Testimonials />
-      <Workshops />
-      <FAQ />
-      <Booking />
-      <Contact />
-      <Footer />
-    </div>
+    <ContentProvider>
+      <div className="min-h-screen">
+        <Header />
+        <Hero />
+        <About />
+        <Services />
+        <Testimonials />
+        <Workshops />
+        <FAQ />
+        <Booking />
+        <Contact />
+        <Footer />
+      </div>
+    </ContentProvider>
   );
 };
 

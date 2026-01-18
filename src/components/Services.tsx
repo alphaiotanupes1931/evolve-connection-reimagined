@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useContent } from "@/contexts/ContentContext";
 
-const services = [
+const defaultServices = [
   {
     title: "Individual Coaching",
     price: "$100 - $200 per session",
@@ -71,6 +72,13 @@ const services = [
 ];
 
 const Services = () => {
+  const { content } = useContent();
+  const servicesContent = content.services || {};
+  
+  const title = servicesContent.title || "What We Offer";
+  const subtitle = servicesContent.subtitle || "Discover the transformative power of restorative coaching for your relationships and personal growth.";
+  const services = servicesContent.items || defaultServices;
+
   return (
     <section id="services" className="py-24 lg:py-36 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
@@ -82,15 +90,15 @@ const Services = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-6">
-            What We Offer
+            {title}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover the transformative power of restorative coaching for your relationships and personal growth.
+            {subtitle}
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+          {services.map((service: any, index: number) => (
             <motion.div
               key={service.title}
               initial={{ opacity: 0, y: 30 }}
@@ -108,7 +116,7 @@ const Services = () => {
               </p>
               
               <ul className="space-y-3 mb-8">
-                {service.features.map((feature) => (
+                {service.features?.map((feature: string) => (
                   <li key={feature} className="text-sm text-muted-foreground flex items-start gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                     {feature}

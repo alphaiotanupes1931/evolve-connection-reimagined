@@ -13,27 +13,27 @@ const values = [
 
 const About = () => {
   return (
-    <section id="about" className="py-20 lg:py-32 bg-card">
+    <section id="about" className="py-24 lg:py-36 bg-card">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
           {/* Content */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-serif text-foreground mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-8">
               Meet Danielle
             </h2>
             
-            <div className="space-y-4 text-muted-foreground leading-relaxed">
+            <div className="space-y-5 text-muted-foreground leading-relaxed text-base md:text-lg">
               <p>
-                Hi, I'm Danielle Woody (she/her), founder of <em className="text-brand">Evolve | Connection Coaching</em>. My journey has been shaped by over a decade of experience in <strong>restorative practices, student accountability, conflict resolution, and leadership development</strong>.
+                Hi, I'm Danielle Woody (she/her), founder of <span className="text-brand font-medium">Evolve | Connection Coaching</span>. My journey has been shaped by over a decade of experience in restorative practices, student accountability, conflict resolution, and leadership development.
               </p>
               
               <p>
-                At <em className="text-brand">Evolve | Connection Coaching</em>, I believe that healing begins with connection, accountability, and love—for ourselves and for those around us. Life's challenges can leave us feeling disconnected, but restoration is always possible.
+                At <span className="text-brand font-medium">Evolve | Connection Coaching</span>, I believe that healing begins with connection, accountability, and love—for ourselves and for those around us. Life's challenges can leave us feeling disconnected, but restoration is always possible.
               </p>
               
               <p>
@@ -42,14 +42,14 @@ const About = () => {
             </div>
 
             {/* Values */}
-            <div className="mt-8 mb-8">
+            <div className="mt-10 mb-10">
               <div className="flex flex-wrap gap-3">
                 {values.map((value, index) => (
                   <motion.span
                     key={value}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
                     viewport={{ once: true }}
                     className="value-pill"
                   >
@@ -61,7 +61,8 @@ const About = () => {
 
             <Button 
               asChild
-              className="rounded-full px-8 bg-primary hover:bg-primary/90 text-primary-foreground"
+              size="lg"
+              className="rounded-full px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-300"
             >
               <a href="#booking">Work With Me</a>
             </Button>
@@ -69,31 +70,37 @@ const About = () => {
 
           {/* Image & Certification */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="relative"
+            className="flex flex-col items-center gap-10"
           >
             <div className="relative">
               <img
                 src={danielleImage}
                 alt="Danielle Woody - Certified Life Coach and founder of Evolve Connection Coaching"
-                className="w-full max-w-md mx-auto rounded-2xl soft-shadow"
+                className="w-full max-w-md rounded-2xl shadow-2xl"
               />
-              
-              {/* Certification Badge */}
-              <div className="absolute -bottom-6 -left-6 lg:left-0 bg-card rounded-xl p-4 card-shadow">
-                <img
-                  src={certifiedLogo}
-                  alt="Certified Life Coach Credential"
-                  className="h-16 w-auto"
-                />
-                <p className="text-xs text-muted-foreground mt-2 text-center">
-                  Professionally Certified<br />Life Coach
-                </p>
-              </div>
             </div>
+            
+            {/* Certification Badge - Centered and Larger */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-8 shadow-xl text-center"
+            >
+              <img
+                src={certifiedLogo}
+                alt="Certified Life Coach Credential"
+                className="h-24 w-auto mx-auto mb-4"
+              />
+              <p className="text-sm text-muted-foreground font-medium">
+                Professionally Certified Life Coach
+              </p>
+            </motion.div>
           </motion.div>
         </div>
       </div>

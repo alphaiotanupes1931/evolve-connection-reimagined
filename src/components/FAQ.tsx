@@ -27,16 +27,16 @@ const faqs = [
 
 const FAQ = () => {
   return (
-    <section className="py-20 lg:py-32 bg-card">
+    <section className="py-24 lg:py-36 bg-card">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-6">
             Frequently Asked Questions
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -45,9 +45,9 @@ const FAQ = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           viewport={{ once: true }}
           className="max-w-3xl mx-auto"
         >
@@ -56,12 +56,12 @@ const FAQ = () => {
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="bg-background rounded-xl px-6 border-none card-shadow"
+                className="bg-background rounded-2xl px-6 border-none shadow-lg"
               >
-                <AccordionTrigger className="text-left font-serif text-lg text-foreground hover:no-underline py-5">
+                <AccordionTrigger className="text-left font-serif text-lg text-foreground hover:no-underline py-6">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                <AccordionContent className="text-muted-foreground pb-6 leading-relaxed">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

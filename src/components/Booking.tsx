@@ -46,8 +46,28 @@ const Booking = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Thank you! We'll be in touch soon to schedule your consultation.");
-    setFormData({ name: "", email: "", sessionType: "", goals: "" });
+    
+    const subject = `Coaching Consultation Request - ${formData.sessionType}`;
+    const body = `Hello Danielle,
+
+I would like to schedule a complimentary consultation for coaching services.
+
+Name: ${formData.name}
+Email: ${formData.email}
+Session Type: ${formData.sessionType}
+
+My Goals:
+${formData.goals}
+
+I look forward to connecting with you!
+
+Best regards,
+${formData.name}`;
+
+    const mailtoLink = `mailto:evolveconnectioncoaching@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+    
+    toast.success("Your email draft is ready! Just hit send.");
   };
 
   return (

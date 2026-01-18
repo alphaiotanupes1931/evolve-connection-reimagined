@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useContent } from "@/contexts/ContentContext";
 
 const Hero = () => {
-  const words = ["Evolve.", "Heal.", "Transform."];
+  const { content, isLoading } = useContent();
+  const heroContent = content.hero || {};
+  
+  const words = heroContent.words || ["Evolve.", "Heal.", "Transform."];
 
   const containerVariants = {
     hidden: { opacity: 1 },
@@ -47,7 +51,7 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
           >
-            {words.map((word, index) => (
+            {words.map((word: string, index: number) => (
               <motion.span
                 key={index}
                 variants={wordVariants}
@@ -64,7 +68,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 2.2 }}
             className="text-lg md:text-xl text-muted-foreground mb-4 font-light italic"
           >
-            Restoration is always possible.
+            {heroContent.subtitle || "Restoration is always possible."}
           </motion.p>
           
           <motion.p
@@ -73,7 +77,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 2.5 }}
             className="text-base md:text-lg text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            Deep, meaningful connections are the foundation of growth, healing, and transformation. Let's build a path forward together.
+            {heroContent.description || "Deep, meaningful connections are the foundation of growth, healing, and transformation. Let's build a path forward together."}
           </motion.p>
           
           <motion.div
@@ -86,7 +90,7 @@ const Hero = () => {
               size="lg"
               className="rounded-full px-10 py-6 text-base bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
             >
-              <a href="#booking">Book a Complimentary Consultation</a>
+              <a href="#booking">{heroContent.ctaText || "Book a Complimentary Consultation"}</a>
             </Button>
           </motion.div>
         </motion.div>

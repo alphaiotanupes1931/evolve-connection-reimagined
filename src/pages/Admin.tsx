@@ -203,19 +203,20 @@ const Admin = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label>Title</Label>
+                  <Label>Words (comma-separated, e.g., "Evolve., Heal., Transform.")</Label>
                   <Input
-                    value={content.hero?.title || ""}
-                    onChange={(e) => updateField("hero", "title", e.target.value)}
+                    value={content.hero?.words?.join(", ") || "Evolve., Heal., Transform."}
+                    onChange={(e) => updateField("hero", "words", e.target.value.split(", ").filter(Boolean))}
                     className="mt-1"
                   />
                 </div>
                 <div>
-                  <Label>Subtitle</Label>
+                  <Label>Subtitle (italic text)</Label>
                   <Input
                     value={content.hero?.subtitle || ""}
                     onChange={(e) => updateField("hero", "subtitle", e.target.value)}
                     className="mt-1"
+                    placeholder="Restoration is always possible."
                   />
                 </div>
                 <div>
@@ -224,6 +225,7 @@ const Admin = () => {
                     value={content.hero?.description || ""}
                     onChange={(e) => updateField("hero", "description", e.target.value)}
                     className="mt-1"
+                    placeholder="Deep, meaningful connections are the foundation of growth, healing, and transformation."
                   />
                 </div>
                 <div>
@@ -232,6 +234,7 @@ const Admin = () => {
                     value={content.hero?.ctaText || ""}
                     onChange={(e) => updateField("hero", "ctaText", e.target.value)}
                     className="mt-1"
+                    placeholder="Book a Complimentary Consultation"
                   />
                 </div>
               </CardContent>

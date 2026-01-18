@@ -2,8 +2,9 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import danielleImage from "@/assets/danielle-woody.jpg";
 import certifiedLogo from "@/assets/certified-life-coach-logo.png";
+import { useContent } from "@/contexts/ContentContext";
 
-const values = [
+const defaultValues = [
   "Restoration",
   "Authenticity", 
   "Compassion",
@@ -11,7 +12,20 @@ const values = [
   "Connection",
 ];
 
+const defaultParagraphs = [
+  'Hi, I\'m Danielle Woody (she/her), founder of Evolve | Connection Coaching. My journey has been shaped by over a decade of experience in restorative practices, student accountability, conflict resolution, and leadership development.',
+  'At Evolve | Connection Coaching, I believe that healing begins with connection, accountability, and love—for ourselves and for those around us. Life\'s challenges can leave us feeling disconnected, but restoration is always possible.',
+  'My mission is to help you restore balance, clarity, and love in your life by using restorative practices that encourage self-reflection, honest communication, personal growth, and meaningful change.',
+];
+
 const About = () => {
+  const { content } = useContent();
+  const aboutContent = content.about || {};
+  
+  const title = aboutContent.title || "Meet Danielle";
+  const paragraphs = aboutContent.paragraphs || defaultParagraphs;
+  const values = aboutContent.values || defaultValues;
+
   return (
     <section id="about" className="py-24 lg:py-36 bg-card">
       <div className="container mx-auto px-4 lg:px-8">
@@ -24,27 +38,22 @@ const About = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-8">
-              Meet Danielle
+              {title}
             </h2>
             
             <div className="space-y-5 text-muted-foreground leading-relaxed text-base md:text-lg">
-              <p>
-                Hi, I'm Danielle Woody (she/her), founder of <span className="text-brand font-medium">Evolve | Connection Coaching</span>. My journey has been shaped by over a decade of experience in restorative practices, student accountability, conflict resolution, and leadership development.
-              </p>
-              
-              <p>
-                At <span className="text-brand font-medium">Evolve | Connection Coaching</span>, I believe that healing begins with connection, accountability, and love—for ourselves and for those around us. Life's challenges can leave us feeling disconnected, but restoration is always possible.
-              </p>
-              
-              <p>
-                My mission is to help you restore balance, clarity, and love in your life by using restorative practices that encourage self-reflection, honest communication, personal growth, and meaningful change.
-              </p>
+              {paragraphs.map((para: string, index: number) => (
+                <p key={index} dangerouslySetInnerHTML={{ 
+                  __html: para
+                    .replace(/Evolve \| Connection Coaching/g, '<span class="text-brand font-medium">Evolve | Connection Coaching</span>')
+                }} />
+              ))}
             </div>
 
             {/* Values */}
             <div className="mt-10 mb-10">
               <div className="flex flex-wrap gap-3">
-                {values.map((value, index) => (
+                {values.map((value: string, index: number) => (
                   <motion.span
                     key={value}
                     initial={{ opacity: 0, y: 10 }}

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import logo from "@/assets/logo.jpg";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,28 +15,25 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-b border-border/50">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2">
-            <div className="flex flex-col items-center">
-              <svg width="40" height="24" viewBox="0 0 40 24" fill="none" className="text-brand">
-                <path d="M20 0C10 0 5 8 5 12C5 16 10 24 20 24C30 24 35 16 35 12C35 8 30 0 20 0ZM20 20C14 20 10 16 10 12C10 8 14 4 20 4C26 4 30 8 30 12C30 16 26 20 20 20Z" fill="currentColor"/>
-                <circle cx="20" cy="12" r="4" fill="currentColor"/>
-              </svg>
-              <span className="text-xs font-serif tracking-[0.2em] text-brand font-medium">EVOLVE</span>
-              <span className="text-[8px] tracking-[0.1em] text-muted-foreground">CONNECTION COACHING</span>
-            </div>
+          <a href="#" className="flex items-center gap-3">
+            <img 
+              src={logo} 
+              alt="Evolve Connection Coaching" 
+              className="h-14 w-auto rounded-lg"
+            />
           </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-foreground hover:text-brand transition-colors"
+                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
               >
                 {link.label}
               </a>
@@ -45,8 +44,7 @@ const Header = () => {
           <div className="hidden md:block">
             <Button 
               asChild
-              variant="outline"
-              className="rounded-full border-foreground/20 hover:bg-accent"
+              className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-300"
             >
               <a href="#booking">Book Now</a>
             </Button>
@@ -54,8 +52,9 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden p-2 text-foreground"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -63,13 +62,13 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border">
+          <div className="md:hidden py-6 border-t border-border/50 animate-fade-in">
             <nav className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-medium text-foreground hover:text-brand transition-colors"
+                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}
@@ -77,8 +76,7 @@ const Header = () => {
               ))}
               <Button 
                 asChild
-                variant="outline"
-                className="rounded-full border-foreground/20 w-fit"
+                className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground w-fit mt-2"
               >
                 <a href="#booking" onClick={() => setIsMenuOpen(false)}>Book Now</a>
               </Button>

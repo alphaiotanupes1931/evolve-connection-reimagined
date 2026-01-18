@@ -1,10 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { User, Heart, Compass, Briefcase, Users, Sparkles } from "lucide-react";
 
 const services = [
   {
-    icon: User,
     title: "Individual Coaching",
     price: "$100 - $200 per session",
     features: [
@@ -16,7 +14,6 @@ const services = [
     cta: "Book a Session",
   },
   {
-    icon: Heart,
     title: "Relationship Coaching",
     price: "$120 - $250 per session",
     features: [
@@ -28,7 +25,6 @@ const services = [
     cta: "Book a Session",
   },
   {
-    icon: Compass,
     title: "Life Transitions Coaching",
     price: "$120 - $250 per session",
     features: [
@@ -40,7 +36,6 @@ const services = [
     cta: "Book a Session",
   },
   {
-    icon: Briefcase,
     title: "Leadership Coaching",
     price: "$150 - $300 per session",
     features: [
@@ -52,7 +47,6 @@ const services = [
     cta: "Book a Session",
   },
   {
-    icon: Users,
     title: "Pre-Marital Coaching",
     price: "Starting at $450 (4 sessions)",
     features: [
@@ -64,7 +58,6 @@ const services = [
     cta: "Book a Package",
   },
   {
-    icon: Sparkles,
     title: "Wedding Officiating",
     price: "$250 - $500",
     features: [
@@ -79,16 +72,16 @@ const services = [
 
 const Services = () => {
   return (
-    <section id="services" className="py-20 lg:py-32 bg-background">
+    <section id="services" className="py-24 lg:py-36 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-6">
             What We Offer
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -96,49 +89,42 @@ const Services = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-card rounded-2xl p-6 card-shadow hover:soft-shadow transition-shadow duration-300"
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <motion.div
+              key={service.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className="group bg-card rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1"
+            >
+              <h3 className="text-xl font-serif text-foreground mb-3">
+                {service.title}
+              </h3>
+              
+              <p className="text-primary font-semibold mb-6 text-lg">
+                {service.price}
+              </p>
+              
+              <ul className="space-y-3 mb-8">
+                {service.features.map((feature) => (
+                  <li key={feature} className="text-sm text-muted-foreground flex items-start gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              
+              <Button 
+                asChild
+                variant="outline"
+                className="w-full rounded-full border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
               >
-                <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-brand" />
-                </div>
-                
-                <h3 className="text-xl font-serif text-foreground mb-2">
-                  {service.title}
-                </h3>
-                
-                <p className="text-primary font-medium mb-4">
-                  {service.price}
-                </p>
-                
-                <ul className="space-y-2 mb-6">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <span className="text-primary mt-1">•</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                
-                <Button 
-                  asChild
-                  variant="outline"
-                  className="w-full rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                >
-                  <a href="#booking">{service.cta}</a>
-                </Button>
-              </motion.div>
-            );
-          })}
+                <a href="#booking">{service.cta}</a>
+              </Button>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

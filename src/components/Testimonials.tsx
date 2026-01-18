@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
 
 const testimonials = [
   {
@@ -15,16 +14,16 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section id="testimonials" className="py-20 lg:py-32 bg-card">
+    <section id="testimonials" className="py-24 lg:py-36 bg-card">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-6">
             What Clients Say
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -36,16 +35,16 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
+              transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="bg-background rounded-2xl p-8 h-full card-shadow">
-                <Quote className="w-8 h-8 text-primary/40 mb-4" />
-                <blockquote className="text-muted-foreground leading-relaxed italic">
-                  "{testimonial.quote}"
+              <div className="bg-background rounded-2xl p-8 h-full shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="text-6xl text-primary/20 font-serif leading-none mb-4">"</div>
+                <blockquote className="text-muted-foreground leading-relaxed">
+                  {testimonial.quote}
                 </blockquote>
               </div>
             </motion.div>

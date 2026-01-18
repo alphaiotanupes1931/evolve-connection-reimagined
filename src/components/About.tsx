@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import danielleImage from "@/assets/danielle-woody.jpg";
+import defaultDanielleImage from "@/assets/danielle-woody.jpg";
 import certifiedLogo from "@/assets/certified-life-coach-logo.png";
 import { useContent } from "@/contexts/ContentContext";
 
@@ -25,6 +25,7 @@ const About = () => {
   const title = aboutContent.title || "Meet Danielle";
   const paragraphs = aboutContent.paragraphs || defaultParagraphs;
   const values = aboutContent.values || defaultValues;
+  const danielleImage = aboutContent.imageUrl || defaultDanielleImage;
 
   return (
     <section id="about" className="py-24 lg:py-36 bg-card">

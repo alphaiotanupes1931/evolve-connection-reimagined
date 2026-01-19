@@ -51,6 +51,25 @@ const AdminLogin = () => {
     }
   };
 
+  const handleForgotPassword = async () => {
+    if (!email) {
+      toast.error("Please enter your email address first");
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/admin/reset-password`,
+      });
+      if (error) throw error;
+      toast.success("Check your email for a password reset link!");
+    } catch (error: any) {
+      toast.error(error.message || "Failed to send reset email");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
@@ -96,6 +115,14 @@ const AdminLogin = () => {
             >
               {isLoading ? "Signing in..." : "Sign In"}
             </Button>
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="w-full text-sm text-muted-foreground hover:text-primary transition-colors"
+              disabled={isLoading}
+            >
+              Forgot your password?
+            </button>
           </form>
         </CardContent>
       </Card>

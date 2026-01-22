@@ -5,8 +5,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useContent } from "@/contexts/ContentContext";
 
-const faqs = [
+const defaultFaqs = [
   {
     question: "What is a Life Coach?",
     answer: "A Life Coach is trained to listen, to observe, and to customize their approach to each individual client's needs. Certified Life Coaches complete extensive training that teaches them how to ask the right questions, communicate effectively and get to the heart of your needs and desires in life. Coaching is not just limited to helping you achieve your personal or professional goals, it can be so much more.",
@@ -26,6 +27,12 @@ const faqs = [
 ];
 
 const FAQ = () => {
+  const { content } = useContent();
+  
+  const title = content.faqs?.title || "Frequently Asked Questions";
+  const subtitle = content.faqs?.subtitle || "Find answers to common questions about our coaching services and approach.";
+  const faqs = content.faqs?.items?.length > 0 ? content.faqs.items : defaultFaqs;
+
   return (
     <section className="py-24 lg:py-36 bg-card">
       <div className="container mx-auto px-4 lg:px-8">
@@ -37,10 +44,10 @@ const FAQ = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-6">
-            Frequently Asked Questions
+            {title}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Find answers to common questions about our coaching services and approach.
+            {subtitle}
           </p>
         </motion.div>
 
@@ -52,7 +59,7 @@ const FAQ = () => {
           className="max-w-3xl mx-auto"
         >
           <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
+            {faqs.map((faq: { question: string; answer: string }, index: number) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}

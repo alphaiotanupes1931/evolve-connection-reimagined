@@ -218,6 +218,7 @@ const Admin = () => {
             <TabsTrigger value="services" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Services</TabsTrigger>
             <TabsTrigger value="testimonials" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Testimonials</TabsTrigger>
             <TabsTrigger value="workshops" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Workshops</TabsTrigger>
+            <TabsTrigger value="faqs" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">FAQs</TabsTrigger>
             <TabsTrigger value="contact" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Contact</TabsTrigger>
           </TabsList>
 
@@ -624,6 +625,81 @@ const Admin = () => {
                   >
                     <Plus className="w-4 h-4 mr-2" />
                     Add Event
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* FAQs Section */}
+          <TabsContent value="faqs">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle>FAQs Section</CardTitle>
+                <Button onClick={() => saveContent("faqs")} disabled={isSaving}>
+                  <Save className="w-4 h-4 mr-2" />
+                  Save Changes
+                </Button>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <Label>Section Title</Label>
+                  <Input
+                    value={content.faqs?.title || ""}
+                    onChange={(e) => updateField("faqs", "title", e.target.value)}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label>Section Subtitle</Label>
+                  <Input
+                    value={content.faqs?.subtitle || ""}
+                    onChange={(e) => updateField("faqs", "subtitle", e.target.value)}
+                    className="mt-1"
+                  />
+                </div>
+                
+                <div className="space-y-4">
+                  <Label className="text-lg font-medium">Questions</Label>
+                  {content.faqs?.items?.map((faq: any, index: number) => (
+                    <Card key={index} className="p-4">
+                      <div className="flex justify-between items-start mb-4">
+                        <span className="font-medium">FAQ {index + 1}</span>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => removeArrayItem("faqs", "items", index)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <div className="grid gap-4">
+                        <div>
+                          <Label>Question</Label>
+                          <Input
+                            value={faq.question || ""}
+                            onChange={(e) => updateNestedArrayField("faqs", "items", index, "question", e.target.value)}
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label>Answer</Label>
+                          <Textarea
+                            value={faq.answer || ""}
+                            onChange={(e) => updateNestedArrayField("faqs", "items", index, "answer", e.target.value)}
+                            className="mt-1"
+                            rows={4}
+                          />
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                  <Button
+                    variant="outline"
+                    onClick={() => addArrayItem("faqs", "items", { question: "", answer: "" })}
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add FAQ
                   </Button>
                 </div>
               </CardContent>
